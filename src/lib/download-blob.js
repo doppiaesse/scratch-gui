@@ -10,9 +10,10 @@ export default (filename, blob) => {
 
     if ('download' in HTMLAnchorElement.prototype) {
         const url = window.URL.createObjectURL(blob);
+        console.log(url);
         downloadLink.href = url;
-        downloadLink.download = filename;
-        downloadLink.type = blob.type;
+        //downloadLink.download = filename;
+        //downloadLink.type = blob.type;
         downloadLink.click();
         // remove the link after a timeout to prevent a crash on iOS 13 Safari
         window.setTimeout(() => {
