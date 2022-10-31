@@ -2,9 +2,5 @@
 
 .share-button {
     background: $data-primary;
-}
-
-.share-button-is-shared {
-    background: $ui-black-transparent;
-    cursor: default;
+    padding: 10px;
 }
