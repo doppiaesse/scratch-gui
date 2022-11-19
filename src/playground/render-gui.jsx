@@ -75,9 +75,7 @@ export default appTarget => {
             /> :
             <WrappedGui
                 canEditTitle
-                backpackVisible
                 showComingSoon
-                backpackHost={backpackHost}
                 canSave={false}
                 onClickLogo={onClickLogo}
             />,
