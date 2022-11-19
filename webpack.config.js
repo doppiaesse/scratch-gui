@@ -88,15 +88,7 @@ const base = {
             })
         ]
     },
-    plugins: [],
-    module: {
-        rules: [
-          {
-            test: /\.js$/,
-            loader: require.resolve('@open-wc/webpack-import-meta-loader'),
-          },
-        ],
-    }
+    plugins: []
 };
 
 if (!process.env.CI) {
