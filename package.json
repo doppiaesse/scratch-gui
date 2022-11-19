@@ -32,6 +32,7 @@
     }
   },
   "dependencies": {
+    "@open-wc/webpack-import-meta-loader": "^0.4.7",
     "@supabase/supabase-js": "^2.0.4",
     "arraybuffer-loader": "^1.0.6",
     "autoprefixer": "^9.0.1",
