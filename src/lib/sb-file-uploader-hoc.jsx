@@ -5,7 +5,6 @@ import {defineMessages, intlShape, injectIntl} from 'react-intl';
 import {connect} from 'react-redux';
 import log from '../lib/log';
 import sharedMessages from './shared-messages';
-import { supabase } from './supa';
 import 'regenerator-runtime/runtime';
 
 import {
@@ -72,13 +71,10 @@ const SBFileUploaderHOC = function (WrappedComponent) {
         async createFileObjects () {
 
             var params = (new URL(document.location)).searchParams;
-            var id = params.get("id");
-            var es = params.get("es");
+            var recordId = params.get("id");
+            var fileName = params.get("file");
 
-            const { data, error } = await supabase
-            .storage
-            .from('progetti/Scratch/' + id)
-            .download(es + '.sb3')
+            const data = await fetch('https://pocketbase-letscode.fly.dev/api/files/5xws49jpqpo9v94/'+recordId+'/'+fileName).then(r => r.blob());
 
             if (data) {
                 console.log("Download successful");
