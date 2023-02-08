@@ -1,3 +1,6 @@
+import PocketBase from 'pocketbase'
+const pb = new PocketBase('https://pocketbase-letscode.fly.dev');
+
 import bindAll from 'lodash.bindall';
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -74,10 +77,17 @@ const SBFileUploaderHOC = function (WrappedComponent) {
         async createFileObjects () {
 
             var params = (new URL(document.location)).searchParams;
-            var recordId = params.get("id");
-            var fileName = params.get("file");
 
-            const data = await fetch('https://pocketbase-letscode.fly.dev/api/files/5xws49jpqpo9v94/'+recordId+'/'+fileName).then(r => r.blob());
+            var data;
+            if (params.get("id") != null) {
+                var recordId = params.get("id");
+                var fileName = params.get("file");
+
+                data = await fetch('https://pocketbase-letscode.fly.dev/api/files/5xws49jpqpo9v94/'+recordId+'/'+fileName).then(r => r.blob());
+            } else {
+                var dati = await pb.collection('esercizi_base_scratch').getFirstListItem('lezione=' + params.get("lez") + ' && esercizio=' + params.get("es"));
+                data = await fetch('https://pocketbase-letscode.fly.dev/api/files/shvv8o4li8tmsru/'+dati.id+'/'+dati.file).then(r => r.blob());
+            }
 
             if (data) {
                 console.log("Download successful");
