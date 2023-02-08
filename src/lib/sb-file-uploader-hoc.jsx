@@ -40,6 +40,8 @@ const messages = defineMessages({
  *     <WrappedComponent />
  * </SBFileUploaderHOC>
  */
+
+
 const SBFileUploaderHOC = function (WrappedComponent) {
     class SBFileUploaderComponent extends React.Component {
         constructor (props) {
@@ -66,13 +68,14 @@ const SBFileUploaderHOC = function (WrappedComponent) {
         handleStartSelectingFileUpload () {
             this.createFileObjects(); // go to step 2
         }
+        
         // step 2: create a FileReader and an <input> element, and issue a
         // pseudo-click to it. That will open the file chooser dialog.
         async createFileObjects () {
 
             var params = (new URL(document.location)).searchParams;
             var recordId = params.get("id");
-            var fileName = await pb.collection('esercizi').getFirstListItem('id="' + recordId + '"');
+            var fileName = params.get("file");
 
             const data = await fetch('https://pocketbase-letscode.fly.dev/api/files/5xws49jpqpo9v94/'+recordId+'/'+fileName).then(r => r.blob());
 

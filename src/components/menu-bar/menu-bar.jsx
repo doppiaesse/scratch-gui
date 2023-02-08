@@ -58,7 +58,7 @@ import {
 import collectMetadata from "../../lib/collect-metadata";
 
 import styles from "./menu-bar.css";
-import share_style from './share-button.css';
+import share_style from "./share-button.css";
 
 import remixIcon from "./icon--remix.svg";
 import dropdownCaret from "./dropdown-caret.svg";
@@ -163,7 +163,12 @@ class MenuBar extends React.Component {
     }
     componentDidMount() {
         document.addEventListener("keydown", this.handleKeyPress);
+
+        window.addEventListener("load", (event) => {
+            this.props.onStartSelectingFileUpload();
+        });
     }
+    
     componentWillUnmount() {
         document.removeEventListener("keydown", this.handleKeyPress);
     }
@@ -418,7 +423,7 @@ class MenuBar extends React.Component {
                                 />
                             </div>
                         )}
-                        {this.props.canManageFiles && (
+                        {/* {this.props.canManageFiles && (
                             <div
                                 className={classNames(
                                     styles.menuBarItem,
@@ -518,19 +523,16 @@ class MenuBar extends React.Component {
                                     </MenuSection>
                                 </MenuBarMenu>
                             </div>
-                        )}
+                        )} */}
                     </div>
                 </div>
 
                 {/* show the proper UI in the account menu, given whether the user is
                 logged in, and whether a session is available to log in with */}
                 <div className={styles.accountInfoGroup}>
-                <div className={classNames(styles.menuBarItem)}>
+                    <div className={classNames(styles.menuBarItem)}>
                         <SB3Downloader>
-                            {(
-                                className,
-                                downloadProjectCallback
-                            ) => (
+                            {(className, downloadProjectCallback) => (
                                 <Button
                                     className={classNames(
                                         className,
