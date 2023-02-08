@@ -72,7 +72,7 @@ const SBFileUploaderHOC = function (WrappedComponent) {
 
             var params = (new URL(document.location)).searchParams;
             var recordId = params.get("id");
-            var fileName = params.get("file");
+            var fileName = await pb.collection('esercizi').getFirstListItem('id="' + recordId + '"');
 
             const data = await fetch('https://pocketbase-letscode.fly.dev/api/files/5xws49jpqpo9v94/'+recordId+'/'+fileName).then(r => r.blob());
 
