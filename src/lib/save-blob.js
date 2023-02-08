@@ -1,20 +1,20 @@
 import PocketBase from 'pocketbase'
 const pb = new PocketBase('https://pocketbase-letscode.fly.dev');
 
-export default async function (blob) {
-    
+export default async function (filename, blob) {
+
     var params = (new URL(document.location)).searchParams;
-    if (params.get("id") != null) {
-        var recordId = params.get("id");
-    } else if (sessionStorage.getItem('lez'+lez+'es'+es) != null) {
-        var recordId = sessionStorage.getItem('lez'+lez+'es'+es);
-        sessionStorage.removeItem('lez'+lez+'es'+es);
-    } else {
-        var recordId = null;
-    }
     var studente = params.get("studente");
     var lez = params.get("lez");
     var es = params.get("es");
+
+    if (params.get("id") != null) {
+        var recordId = params.get("id");
+        sessionStorage.removeItem('lez'+lez+'es'+es);
+        console.log('ho trovato param');
+    } else {
+        var recordId = sessionStorage.getItem('lez'+lez+'es'+es);
+    }
 
     // aggiungi file
     const formData = new FormData();
