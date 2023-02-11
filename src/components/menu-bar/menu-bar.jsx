@@ -166,6 +166,10 @@ class MenuBar extends React.Component {
 
         window.addEventListener("load", (event) => {
             this.props.onStartSelectingFileUpload();
+            var params = (new URL(document.location)).searchParams;
+            if (params.get("lez") == 0) {
+                document.getElementById("botSalva").style.display = "none";
+            }
         });
     }
     
@@ -529,7 +533,7 @@ class MenuBar extends React.Component {
 
                 {/* show the proper UI in the account menu, given whether the user is
                 logged in, and whether a session is available to log in with */}
-                <div className={styles.accountInfoGroup}>
+                <div className={styles.accountInfoGroup} id="botSalva">
                     <div className={classNames(styles.menuBarItem)}>
                         <SB3Downloader>
                             {(className, downloadProjectCallback) => (
