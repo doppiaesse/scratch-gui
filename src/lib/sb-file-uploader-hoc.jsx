@@ -1,5 +1,5 @@
 import PocketBase from 'pocketbase'
-const pb = new PocketBase('https://pocketbase-letscode.fly.dev');
+const pb = new PocketBase('https://db.letscodeitalia.it');
 
 import bindAll from 'lodash.bindall';
 import React from 'react';
@@ -83,10 +83,10 @@ const SBFileUploaderHOC = function (WrappedComponent) {
                 var recordId = params.get("id");
                 var fileName = params.get("file");
 
-                data = await fetch('https://pocketbase-letscode.fly.dev/api/files/5xws49jpqpo9v94/'+recordId+'/'+fileName).then(r => r.blob());
+                data = await fetch('https://db.letscodeitalia.it/api/files/5xws49jpqpo9v94/'+recordId+'/'+fileName).then(r => r.blob());
             } else {
                 var dati = await pb.collection('esercizi_base_scratch').getFirstListItem('lezione=' + params.get("lez") + ' && esercizio=' + params.get("es"));
-                data = await fetch('https://pocketbase-letscode.fly.dev/api/files/shvv8o4li8tmsru/'+dati.id+'/'+dati.file).then(r => r.blob());
+                data = await fetch('https://db.letscodeitalia.it/api/files/shvv8o4li8tmsru/'+dati.id+'/'+dati.file).then(r => r.blob());
             }
 
             if (data) {

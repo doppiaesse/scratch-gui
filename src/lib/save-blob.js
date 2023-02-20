@@ -1,5 +1,5 @@
 import PocketBase from 'pocketbase'
-const pb = new PocketBase('https://pocketbase-letscode.fly.dev');
+const pb = new PocketBase('https://db.letscodeitalia.it');
 
 export default async function (filename, blob) {
 
