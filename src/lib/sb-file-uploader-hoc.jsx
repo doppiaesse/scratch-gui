@@ -79,14 +79,44 @@ const SBFileUploaderHOC = function (WrappedComponent) {
             var params = (new URL(document.location)).searchParams;
 
             var data;
+
+            
             if (params.get("id") != null) {
                 var recordId = params.get("id");
                 var fileName = params.get("file");
 
                 data = await fetch('https://db.letscodeitalia.it/api/files/5xws49jpqpo9v94/'+recordId+'/'+fileName).then(r => r.blob());
             } else {
-                var dati = await pb.collection('esercizi_base_scratch').getFirstListItem('lezione=' + params.get("lez") + ' && esercizio=' + params.get("es"));
-                data = await fetch('https://db.letscodeitalia.it/api/files/shvv8o4li8tmsru/'+dati.id+'/'+dati.file).then(r => r.blob());
+                if (params.get("lez") == "-1") {
+                    let esercizio, fileName;
+                    try {
+                        esercizio = await pb.collection('esercizi').getFirstListItem('corso="scratch" && studente="' + params.get("studente") + '" && lezione=' + (-1) + ' && esercizio=' + params.get("es"));
+                        fileName = esercizio.file;
+                        sessionStorage.setItem('lez'+params.get('lez')+'es'+params.get('es'), esercizio.id);
+                    } catch (e) {
+                        const dati = {
+                            "corso": "scratch",
+                            "studente": params.get("studente"),
+                            "lezione": params.get("lez"),
+                            "esercizio": params.get("es"),
+                            "editor": "",
+                            "esBase": 123
+                        };
+                        
+                        const record = await pb.collection('esercizi').create(dati);
+    
+                        sessionStorage.setItem('lez'+params.get('lez')+'es'+params.get('es'), record.id);
+                    } finally {
+                        if (params.get("esBase") != null) {
+                            esercizio = await pb.collection('esercizi_base_scratch').getFirstListItem('lezione=' + (-1) + ' && esercizio=' + parseInt(params.get("esBase")));
+                            fileName = esercizio.file;
+                            data = await fetch('https://db.letscodeitalia.it/api/files/shvv8o4li8tmsru/' + esercizio.id + '/' + fileName).then(r => r.blob());
+                        }
+                    }
+                } else {
+                    var dati = await pb.collection('esercizi_base_scratch').getFirstListItem('lezione=' + params.get("lez") + ' && esercizio=' + params.get("es"));
+                    data = await fetch('https://db.letscodeitalia.it/api/files/shvv8o4li8tmsru/'+dati.id+'/'+dati.file).then(r => r.blob());
+                }
             }
 
             if (data) {
