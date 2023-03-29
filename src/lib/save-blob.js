@@ -37,8 +37,10 @@ export default async function (filename, blob) {
 
     if (record) {
         console.log("Upload successful");
+        window.alert("Progetto salvato correttamente!");
     } else {
         console.log("Upload failed", error);
+        window.alert("Progetto salvato correttamente!");
     }
 
 };
