@@ -100,7 +100,7 @@ const SBFileUploaderHOC = function (WrappedComponent) {
                             "lezione": params.get("lez"),
                             "esercizio": params.get("es"),
                             "editor": "",
-                            "esBase": 123
+                            "esBase": params.get("esBase")
                         };
                         
                         const record = await pb.collection('esercizi').create(dati);
